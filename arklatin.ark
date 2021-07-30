@@ -1,16 +1,15 @@
 (import "list.ark")
 (import "String.ark")
 (let vowels "aeiou")
-(let consonants "bcdfgjklmnpqrstvxz")
 
 (let word "eat")
 
-(let isConsonant (fun  (char) {
-    (> (str:find consonants char) -1)
+(let isVowel (fun  (char) {
+    (> (str:find vowels char) -1)
 }))
 
-(let isVowel (fun (char) {
-    (> (str:find vowels char) -1)
+(let isConsonant (fun  (char) {
+    (not (isVowel char))
 }))
 
 (let startsWithVowel (isVowel (@ word 0)))
