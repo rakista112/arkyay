@@ -3,7 +3,7 @@
 (import "String.ark")
 (let vowels "aeiou")
 
-(let word "eat")
+(let word "beat")
 
 (let isVowel (fun  (char) {
     (> (str:find vowels char) -1)
@@ -15,28 +15,13 @@
 
 (let startsWithVowel (isVowel (@ word 0)))
 
-(let takeWhile (fun (_L _f) {
-    (mut _index 0)
-    (mut _output [])
-    (mut continue true)
-    (while (and (< _index (len _L)) continue)
-        (if (_f (@ _L _index))
-            {
-                (set _output (append _output (@ _L _index)))
-                (set _index (+ 1 _index))
-            }
-            (set continue false)
-        )
-    )
-    _output
-}))
-
 (let implode (fun (wordList) {
     (str:join wordList "")
 }))
 
 # keep taking until we get to a vowel
-(let firstPart (takeWhile word isConsonant))
+# list:takeWhile to come in ArkScript 3.2.0
+(let firstPart (list:takeWhile word isConsonant))
 (let lastPart (list:dropWhile word isConsonant))
 
 (let result (implode (list:map [lastPart firstPart] implode)))
