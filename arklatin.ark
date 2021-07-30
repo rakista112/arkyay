@@ -1,0 +1,50 @@
+(import "list.ark")
+(import "String.ark")
+(let vowels "aeiou")
+(let consonants "bcdfgjklmnpqrstvxz")
+
+(let word "eat")
+
+(let isConsonant (fun  (char) {
+    (> (str:find consonants char) -1)
+}))
+
+(let isVowel (fun (char) {
+    (> (str:find vowels char) -1)
+}))
+
+(let startsWithVowel (isVowel (@ word 0)))
+
+(let takeWhile (fun (_L _f) {
+    (mut _index 0)
+    (mut _output [])
+
+    (mut continue true)
+    (while continue 
+        (if (_f (@ _L _index))
+            {
+                (set _output (append _output (@ _L _index)))
+                (set _index (+ 1 _index))
+            }
+            (set continue false)
+        )
+    )
+    _output
+}))
+
+(let implode (fun (wordList) {
+    (str:join wordList "")
+}))
+
+# keep taking until we get to a vowel
+(let firstPart (takeWhile word isConsonant))
+(let lastPart (list:dropWhile word isConsonant))
+
+(let result (str:join [(implode lastPart) (implode firstPart)] ""))
+
+# end word depending on 
+# add "yay" if word started with a vowel
+(if startsWithVowel 
+    (print result "yay")
+    (print result "ay")
+)
